@@ -32,7 +32,7 @@ public class PostSubmitScene {
             int green = rand.nextInt(255);
             int blue = rand.nextInt(255);
 
-            Text text = new Text(x, y, "miriam is always right opf course");
+            Text text = new Text(x, y, "miriam is always right of course");
 
             ;
             text.setFill(Color.rgb(red, green, blue, .99));

@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 public class SortWords {
 
 
-    public static void sortWords(List<String> arList) {
+    public  void sortWords(List<String> arList) {
 
-        String STOPWORDSLIST = "D:\\Downloads\\WordCloud0.1 count working no fonts\\WordCloud0.1\\src\\resources\\stopwords.txt";
+        final String STOPWORDSLIST = "C:\\Users\\Jake Fishlock\\Desktop\\wordcloud0.2\\WordCloud0.1\\src\\address\\model\\stopwords.txt";
         // read Stopwords.txt
         //read file
 
@@ -30,7 +30,7 @@ public class SortWords {
         //System.out.println(stopWordList.toString());
         //System.out.println(arList.toString());
 
-        final HashMap<String, Integer> wordToCountMap = new HashMap<>();
+        HashMap<String, Integer> wordToCountMap = new HashMap<>();
         List wordsList = new ArrayList<>();
         //Compare words against the stopword list
         for (String word : arList) {
@@ -41,14 +41,17 @@ public class SortWords {
                 wordToCountMap.put(word, wordCounter);
             }
         }
+        LoopTheList loopTheList = new LoopTheList();
+        loopTheList.loopingList(wordToCountMap);
         //output
         //preparing the output
-        final ArrayList<Map.Entry<String, Integer>> highToLowCountEntries = new ArrayList<>(wordToCountMap.entrySet());
+
+        ArrayList<Map.Entry<String, Integer>> highToLowCountEntries = new ArrayList<>(wordToCountMap.entrySet());
         //sorting the collected entries by word count.
         Collections.sort(highToLowCountEntries, Comparator.comparing(AbstractMap.Entry<String, Integer>::getValue).reversed());
         //System.out.printf("%s.%n ", highToLowCountEntries);
-        LoopTheList loopTheList = new LoopTheList();
-        loopTheList.loopingList(wordToCountMap);
+
+
 
 
     }
