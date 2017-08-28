@@ -21,7 +21,7 @@ import java.util.List;
 public class ListToFont {
 
 public static Pane window;
-    public void loopyLoo(List<List> list2) {
+    private void loopyLoo(List<List> list2) {
         TextFlow textFlow = new TextFlow();
 
         final Menu menu1 = new Menu("File");
@@ -39,28 +39,30 @@ public static Pane window;
         Scene scene = new Scene(group, 1200, 600, Color.WHITE);
         stage.setTitle("WordCloud");
         Random rand = new Random(System.currentTimeMillis());
-        double size = 63;
+        double size = 90;
         String family = "Arial";
 
 
-        Text text = new Text();
+        Text text;
 
         for (List e : list2) {
             System.out.println(e);
-            size = (size - 7);
+            size = (size - 12);
             int red = rand.nextInt(255);
             int green = rand.nextInt(255);
             int blue = rand.nextInt(255);
 
             for (Object d : e) {
                 System.out.println(d);
-                int x = rand.nextInt((int) scene.getWidth());
-                int y = rand.nextInt((int) scene.getHeight());
+                int x = rand.nextInt(1200);
+                int y = rand.nextInt(600);
 
                 text = new Text(x, y, (String) d);
                 text.setFont(Font.font(family, size));
                 text.setFill(Color.rgb(red, green, blue, .99));
                 text.setTextAlignment(TextAlignment.JUSTIFY);
+                textFlow.setLayoutX(x);
+                textFlow.setLayoutY(y);
 
 
                 // Add the Text Nodes to the VBox
