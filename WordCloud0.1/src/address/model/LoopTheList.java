@@ -16,8 +16,8 @@ public class LoopTheList {
         Collections.reverse(values);
         //System.out.println(values);
 
-        Integer highestValue = values.get(0);
-        List<Map.Entry<String, Integer>> wordsWithHighestValue = wordToCountMap.entrySet().stream().filter(e -> e.getValue().equals(highestValue)).collect(Collectors.toList());
+//        Integer highestValue = values.get(0);
+//        List<Map.Entry<String, Integer>> wordsWithHighestValue = wordToCountMap.entrySet().stream().filter(e -> e.getValue().equals(highestValue)).collect(Collectors.toList());
 
         //System.out.println(wordsWithHighestValue);
 
@@ -38,7 +38,8 @@ public class LoopTheList {
         //System.out.println(countToWordsMap.values());
         //System.out.println(list2.get(0));
         ListToFont listToFont = new ListToFont();
-        listToFont.loopyLoo(list2);
+        listToFont.LoopingToScene(list2);
+
 
     }
 }

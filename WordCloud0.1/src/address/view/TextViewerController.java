@@ -27,7 +27,7 @@ public class TextViewerController {
     private Button submitButton;
 
     @FXML
-    private TextArea textArea1;
+
 
     //reference to main application
     private Main main;
@@ -38,6 +38,7 @@ public class TextViewerController {
      */
     public TextViewerController(){
 
+
     }
     /*
     init the controller class. this method is automatically called after the fxml file has been loaded.
@@ -47,13 +48,15 @@ public class TextViewerController {
 
     private void initalize()throws IOException{
 
+
+
         submitButton.setOnAction(event -> {
                     String uText = textArea.getText();
                     List<String> arList = new ArrayList<>(Arrays.asList(uText.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ")));
 
                     //System.out.println(arList.toString());
                     SortWords sortWords = new SortWords();
-                    sortWords.sortWords(arList);
+            sortWords.sortWords(arList);
             try {
                 handlebuttonAction();
             } catch (IOException e) {

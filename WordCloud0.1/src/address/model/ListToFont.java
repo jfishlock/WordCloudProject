@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -21,7 +22,7 @@ import java.util.List;
 public class ListToFont {
 
 public static Pane window;
-    private void loopyLoo(List<List> list2) {
+    public void LoopingToScene(List<List> list2) {
         TextFlow textFlow = new TextFlow();
 
         final Menu menu1 = new Menu("File");
@@ -36,10 +37,11 @@ public static Pane window;
         Group group = new Group(textFlow);
 
         Stage stage = new Stage();
+        //stage.getIcons().add(new Image("C:\\Users\\Jake Fishlock\\Desktop\\wordcloud0.2\\WordCloud0.1\\src\\resources\\cloud.png"));
         Scene scene = new Scene(group, 1200, 600, Color.WHITE);
         stage.setTitle("WordCloud");
         Random rand = new Random(System.currentTimeMillis());
-        double size = 90;
+        double size = 150;
         String family = "Arial";
 
 
@@ -47,7 +49,7 @@ public static Pane window;
 
         for (List e : list2) {
             System.out.println(e);
-            size = (size - 12);
+            size = (size - 30);
             int red = rand.nextInt(255);
             int green = rand.nextInt(255);
             int blue = rand.nextInt(255);

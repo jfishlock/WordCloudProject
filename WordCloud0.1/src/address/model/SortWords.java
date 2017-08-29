@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.*;
 import java.io.BufferedReader;
@@ -16,7 +17,7 @@ public class SortWords {
 
     public  void sortWords(List<String> arList) {
 
-        final String STOPWORDSLIST = "C:\\Users\\Jake Fishlock\\Desktop\\wordcloud0.2\\WordCloud0.1\\src\\address\\model\\stopwords.txt";
+        final String STOPWORDSLIST = "C:\\Users\\Jake Fishlock\\Desktop\\wordcloud0.2\\WordCloud0.1\\src\\resources\\stopwords.txt";
         // read Stopwords.txt
         //read file
 
