@@ -7,7 +7,7 @@ import java.util.*;
 public class LoopTheList {
 
 
-    public void loopingList(HashMap<String, Integer> wordToCountMap) {
+    void loopingList(HashMap<String, Integer> wordToCountMap) {
 
 
 //        List<Integer> values = wordToCountMap.values().stream().collect(Collectors.toList());
@@ -27,9 +27,7 @@ public class LoopTheList {
         }
         //putting the values into their own list as they are now sorted in the correct order
         List<List> list2 = new ArrayList<>();
-        for (List d : countToWordsMap.values()) {
-            list2.add(d);
-        }
+        list2.addAll(countToWordsMap.values());
 
 
         ListToFont listToFont = new ListToFont();

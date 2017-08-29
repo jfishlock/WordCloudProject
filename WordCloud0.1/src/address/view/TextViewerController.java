@@ -57,26 +57,17 @@ public class TextViewerController {
                     //System.out.println(arList.toString());
                     SortWords sortWords = new SortWords();
             sortWords.sortWords(arList);
-            try {
-                handlebuttonAction();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
 
         });
     }
-//    public void ReadStopwords2(List<String> stopWordList){
-//        System.out.println(stopWordList.toString());
 
 
 
 
 
-public  void handlebuttonAction() throws IOException{
 
-    ListToFont listToFont = new ListToFont();
 
-}
     public void setMain(Main main){
         this.main = main;
     }

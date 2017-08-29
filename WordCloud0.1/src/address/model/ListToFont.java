@@ -23,7 +23,7 @@ import java.util.List;
 public class ListToFont {
 
 
-    public void LoopingToScene(List<List> list2) {
+    void LoopingToScene(List<List> list2) {
         TextFlow textFlow = new TextFlow();
 
         final Menu menu1 = new Menu("File");
