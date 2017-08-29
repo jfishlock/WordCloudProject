@@ -2,25 +2,20 @@ package address.model;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class LoopTheList {
 
 
     public void loopingList(HashMap<String, Integer> wordToCountMap) {
 
-        //System.out.println(wordToCountMap);
 
-        List<Integer> values = wordToCountMap.values().stream().collect(Collectors.toList());
-        Collections.sort(values);
-        Collections.reverse(values);
-        //System.out.println(values);
+//        List<Integer> values = wordToCountMap.values().stream().collect(Collectors.toList());
+//        Collections.sort(values);
+//        Collections.reverse(values);
+//        //System.out.println(values);
 
-//        Integer highestValue = values.get(0);
-//        List<Map.Entry<String, Integer>> wordsWithHighestValue = wordToCountMap.entrySet().stream().filter(e -> e.getValue().equals(highestValue)).collect(Collectors.toList());
-
-        //System.out.println(wordsWithHighestValue);
-
+        //Sorting the words proportionate to the count and adding them to a map where count is key and list of words are a value reversed to have highest first
         NavigableMap<Integer, List<String>> countToWordsMap = new TreeMap<>(Collections.reverseOrder());
         for (Map.Entry<String, Integer> entry : wordToCountMap.entrySet()) {
             Integer count = entry.getValue();
@@ -30,13 +25,13 @@ public class LoopTheList {
 
 
         }
+        //putting the values into their own list as they are now sorted in the correct order
         List<List> list2 = new ArrayList<>();
         for (List d : countToWordsMap.values()) {
             list2.add(d);
         }
 
-        //System.out.println(countToWordsMap.values());
-        //System.out.println(list2.get(0));
+
         ListToFont listToFont = new ListToFont();
         listToFont.LoopingToScene(list2);
 

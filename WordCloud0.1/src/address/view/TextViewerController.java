@@ -49,7 +49,7 @@ public class TextViewerController {
     private void initalize()throws IOException{
 
 
-
+        //to send text to be sorted against stop word list
         submitButton.setOnAction(event -> {
                     String uText = textArea.getText();
                     List<String> arList = new ArrayList<>(Arrays.asList(uText.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ")));
