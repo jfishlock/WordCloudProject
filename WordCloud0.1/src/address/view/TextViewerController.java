@@ -1,15 +1,12 @@
 package address.view;
 
 import address.Main;
-import address.model.ListToFont;
-import address.model.LoopTheList;
 import address.model.SortWords;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 import java.io.IOException;
-import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +24,7 @@ public class TextViewerController {
     private Button submitButton;
 
     @FXML
-
+    private  Button clearButton;
 
     //reference to main application
     private Main main;
@@ -58,8 +55,22 @@ public class TextViewerController {
                     SortWords sortWords = new SortWords();
             sortWords.sortWords(arList);
 
+//            try{
+//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("address/view/PostSubmitScene.fxml"));
+//                Parent root1 =  fxmlLoader.load();
+//                Stage stage =  new Stage();
+//                stage.setScene(new Scene(root1));
+//                stage.show();
+//
+//            } catch(Exception e){
+//                e.printStackTrace();
+//            }
+
 
         });
+        clearButton.setOnAction( event ->{
+            textArea.clear();
+        } );
     }
 
 

@@ -30,6 +30,7 @@ public class LoopTheList {
         list2.addAll(countToWordsMap.values());
 
 
+
         ListToFont listToFont = new ListToFont();
         listToFont.LoopingToScene(list2);
 

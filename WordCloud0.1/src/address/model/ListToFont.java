@@ -1,91 +1,252 @@
 package address.model;
 
-import javafx.scene.Group;
+import com.iveloper.utils.packer.Node;
+import com.iveloper.utils.packer.Packer;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.image.Image;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-
-import java.util.*;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 
 public class ListToFont {
+    int placedLine, newLine;
+    private ArrayList<Text> textnodes;
 
+
+    double fitX = 0;
+    double fitY = 0;
+
+    private ImageView pic;
 
     void LoopingToScene(List<List> list2) {
-        TextFlow textFlow = new TextFlow();
 
-        final Menu menu1 = new Menu("File");
-        final Menu menu2 = new Menu("Options");
-        final Menu menu3 = new Menu("Help");
+
+        HBox hBox = new HBox();
+        textnodes = new ArrayList<>();
+
 
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu1, menu2, menu3);
-
-
-        Group group = new Group(textFlow);
-
+        Menu menuFile = new Menu("File");
+        menuBar.useSystemMenuBarProperty().set(true);
+        menuBar.getMenus().addAll(menuFile);
+        MenuItem itmsave = new MenuItem("Save");
+        menuFile.getItems().addAll(itmsave);
         Stage stage = new Stage();
-        //stage.getIcons().add(new Image("C:\\Users\\Jake Fishlock\\Desktop\\wordcloud0.2\\WordCloud0.1\\src\\resources\\cloud.png"));
-        Scene scene = new Scene(group, 1200, 600, Color.WHITE);
-        stage.setTitle("WordCloud");
+        VBox menuVBox = new VBox(menuBar);
+        menuVBox.setAlignment(Pos.TOP_RIGHT);
+        Pane root = new Pane(menuVBox);
+        Scene scene = new Scene(root, 800, 800);
+
+
+        itmsave.setOnAction(e -> {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Save Image");
+                    //System.out.println(pic.getId());
+                    File file = fileChooser.showSaveDialog(stage);
+                    if (file != null) {
+                        try {
+                            ImageIO.write(SwingFXUtils.fromFXImage(pic.getImage(),
+                                    null), "png", file);
+                        } catch (IOException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                    }
+                }
+        );
+
 
         Integer size = 150;
+        Integer setX = 50;
+        Integer setY = 50;
         String family = "Arial";
-        Text text;
+
         Random rand = new Random(System.currentTimeMillis());
+
+        ArrayList<Node> blocks = new ArrayList<>();
+
 
         //Loop through arrayList to get each individual list
         for (List e : list2) {
-            System.out.println(e);
+
+            int listsize = list2.size();
+            Packer packer = new Packer(1000, 80, 80);
+
+
+            //Need the size of the list to go to
+            //System.out.println(e);
             //this will decrease the font size for strings in each list
-            size = (size - 30);
+            size = (size - 20);
+            setX = (setX + 5);
+            setY = (setY + 5);
             //Random colour generator
             int red = rand.nextInt(255);
             int green = rand.nextInt(255);
             int blue = rand.nextInt(255);
+            //
+            // int nop = e.size();
+
 
             for (Object d : e) {
-                System.out.println(d);
-                int x = rand.nextInt((int)scene.getWidth());
-                int y = rand.nextInt((int)scene.getHeight());
+                int x = (int) (scene.getWidth() / 2);
+                int y = (int) (root.getHeight() / 2);
 
-                text = new Text(x, y, (String) d);
+
+                //System.out.println(e.size());
+                //System.out.println(d);
+
+                Text text = new Text(x, y, (String) d);
+                /*
+                if collision = true {
+                    translate setx{
+                    if still true {
+                    translate sety 50{
+                    if still true{
+                    translate setx -50
+                    if still true{
+                    translate sety -50{
+                    if still true {
+                    start again but increase movement size by 20 each iteration.
+                    translate setx =
+
+                    x--->-x
+                    |      |
+                    ^      |
+                    |      |
+                    |     \/
+                    x-<---x
+                 */
+
+
                 //gives it font and size depending on index of the list
                 text.setFont(Font.font(family, size));
                 //random colour generator being used
                 text.setFill(Color.rgb(red, green, blue, .99));
-                text.setTextAlignment(TextAlignment.JUSTIFY);
-                textFlow.setPrefWidth(Region.USE_COMPUTED_SIZE);
-                textFlow.setPrefHeight(Region.USE_COMPUTED_SIZE);
-                textFlow.setLayoutX(scene.getWidth());
-                textFlow.setLayoutY(scene.getHeight());
+//                textFlow.setLayoutX(scene.getWidth());
+//                textFlow.setLayoutY(scene.getHeight());
+                // gets height/width of text object with font style and size
+                double getWidth = text.getBoundsInLocal().getWidth();
+                double getHeight = text.getBoundsInLocal().getHeight();
 
 
-                group.getChildren().addAll(text);
+                //Steph Added
+                int getWidthInt = (int) getWidth;
+                int getHeightInt = (int) getHeight;
+                final Rectangle redBorder = new Rectangle(0, 0, Color.TRANSPARENT);
+                redBorder.setStroke(Color.RED);
+                redBorder.setManaged(false);
+                text.boundsInParentProperty().addListener((observable, oldValue, newValue) -> {
+                    redBorder.setLayoutX(text.getBoundsInParent().getMinX());
+                    redBorder.setLayoutY(text.getBoundsInParent().getMinY());
+                    redBorder.setWidth(text.getBoundsInParent().getWidth());
+                    redBorder.setHeight(text.getBoundsInParent().getHeight());
+                });
+
+
+                blocks.add(new Node(text.toString(), getWidth, getHeight));
+
+                textnodes.add(text);
+
+
+                Collections.sort(blocks, (a, b) -> {
+                    return (Double.compare(b.w, a.w)); //sort based on width
+                });
+//                packer.fit(blocks);
+//                Iterator<Node> blocksItr = blocks.iterator();
+//                while (blocksItr.hasNext()) {
+//                    Node block = blocksItr.next();
+//                    if (block.fit != null) {
+//                        if (block.fit.isroot) {
+//                            System.out.printf("%32s", "pack starts here");
+//                            System.out.println("");
+//                            System.out.printf("%32s%24s%16s%16s%16s", "Display name", "x", "y", "w", "h");
+//                            System.out.println("");
+//                        }
+//                        System.out.printf("%32s%24s%16s%16s%16s", block.name, block.fit.x, block.fit.y, block.w, block.h);
+//                        System.out.println("");
+//
+//
+//                        System.out.println(block.fit.x + ", " + block.fit.y);
+//                        fitX = block.fit.x;
+//                        fitY = block.fit.y;
+//
+//
+//                    }
+//
+//                    System.out.println("");
+//                    System.out.println(fitX + "," + fitY);
+//                    //text = new Text(fitX, fitY, (String) d);
+//
+//
+//                }
+//                {
+//
+//
+                root.getChildren().addAll(text);
+                checkShapeIntersection(textnodes.get(textnodes.size() - 1));
+
+//
+////                    checkShapeIntersection(nodes.get(nodes.size() - 1))
+//                }
+
+
             }
+
+
         }
+
+
+        //stage.getIcons().add(new Image("C:\\Users\\Jake Fishlock\\Desktop\\wordcloud0.2\\WordCloud0.1\\src\\resources\\cloud.png"));
+
+        stage.setScene(scene);
+        stage.setTitle("WordCloud");
+        //hBox.getChildren().add(root);
+        //HBox.setHgrow(root, Priority.ALWAYS);
+        //Scene scene1 = new Scene(new StackPane(root), 800, 800);
+
+
         stage.setScene(scene);
         stage.show();
     }
+
+    private void checkShapeIntersection(Text text) {
+        boolean collisionDetected = false;
+        for (Shape static_bloc : textnodes) {
+            if (static_bloc != text) {
+
+                Shape intersect = Text.intersect(text, static_bloc);
+                if (intersect.getBoundsInLocal().getWidth() != -1) {
+                    collisionDetected = true;
+                }
+            }
+        }
+
+
+        if (collisionDetected) {
+
+            text.translateXProperty().asObject().setValue((double) 180);
+        }
+    }
 }
-
-
-
-
-
-
-
 
 
