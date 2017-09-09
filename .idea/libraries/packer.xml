@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="packer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../packer/out/artifacts/packer_jar/packer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
