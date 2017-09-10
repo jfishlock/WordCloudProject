@@ -16,7 +16,6 @@ import java.util.List;
 public class TextViewerController {
 
 
-
     @FXML
     private TextArea textArea;
 
@@ -24,7 +23,8 @@ public class TextViewerController {
     private Button submitButton;
 
     @FXML
-    private  Button clearButton;
+    private Button clearButton;
+
 
     //reference to main application
     private Main main;
@@ -33,7 +33,7 @@ public class TextViewerController {
     the constructor
     contrsuctor called before init method
      */
-    public TextViewerController(){
+    public TextViewerController() {
 
 
     }
@@ -41,18 +41,19 @@ public class TextViewerController {
     init the controller class. this method is automatically called after the fxml file has been loaded.
      */
 
-    @FXML
 
-    private void initalize()throws IOException{
+
+    @FXML
+    private void initalize() throws IOException {
 
 
         //to send text to be sorted against stop word list
         submitButton.setOnAction(event -> {
-                    String uText = textArea.getText();
-                    List<String> arList = new ArrayList<>(Arrays.asList(uText.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ")));
+            String uText = textArea.getText();
+            List<String> arList = new ArrayList<>(Arrays.asList(uText.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ")));
 
-                    //System.out.println(arList.toString());
-                    SortWords sortWords = new SortWords();
+            //System.out.println(arList.toString());
+            SortWords sortWords = new SortWords();
             sortWords.sortWords(arList);
 
 //            try{
@@ -68,18 +69,16 @@ public class TextViewerController {
 
 
         });
-        clearButton.setOnAction( event ->{
+        clearButton.setOnAction(event -> {
             textArea.clear();
-        } );
+        });
+
+
     }
 
 
 
-
-
-
-
-    public void setMain(Main main){
+    public void setMain(Main main) {
         this.main = main;
     }
 }

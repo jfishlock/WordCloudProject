@@ -8,30 +8,36 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class ListToFont {
     int placedLine, newLine;
     private ArrayList<Text> textnodes;
+    Random rand = new Random(System.currentTimeMillis());
+    Double randomdegree = ThreadLocalRandom.current().nextDouble(0, 360);
 
 
     double fitX = 0;
@@ -58,22 +64,9 @@ public class ListToFont {
         Pane root = new Pane(menuVBox);
         Scene scene = new Scene(root, 800, 800);
 
-
-        itmsave.setOnAction(e -> {
-                    FileChooser fileChooser = new FileChooser();
-                    fileChooser.setTitle("Save Image");
-                    //System.out.println(pic.getId());
-                    File file = fileChooser.showSaveDialog(stage);
-                    if (file != null) {
-                        try {
-                            ImageIO.write(SwingFXUtils.fromFXImage(pic.getImage(),
-                                    null), "png", file);
-                        } catch (IOException ex) {
-                            System.out.println(ex.getMessage());
-                        }
-                    }
-                }
-        );
+//        itmsave.setOnAction(event -> {
+//            saveToFile(Snapshot);
+//        });
 
 
         Integer size = 150;
@@ -81,7 +74,6 @@ public class ListToFont {
         Integer setY = 50;
         String family = "Arial";
 
-        Random rand = new Random(System.currentTimeMillis());
 
         ArrayList<Node> blocks = new ArrayList<>();
 
@@ -165,6 +157,7 @@ public class ListToFont {
 
                 blocks.add(new Node(text.toString(), getWidth, getHeight));
 
+                //adding textobjects to
                 textnodes.add(text);
 
 
@@ -229,6 +222,8 @@ public class ListToFont {
         stage.show();
     }
 
+    //this part does the collision detection
+
     private void checkShapeIntersection(Text text) {
         boolean collisionDetected = false;
         for (Shape static_bloc : textnodes) {
@@ -243,8 +238,27 @@ public class ListToFont {
 
 
         if (collisionDetected) {
+            while (collisionDetected = true) {
+                Path path = new Path();
+                MoveTo moveTo = new MoveTo();
 
-            text.translateXProperty().asObject().setValue((double) 180);
+                text.setX(randomdegree);
+                text.setY(randomdegree);
+                path.getElements().add(moveTo);
+                break;
+            }
+        }
+
+    }
+
+    public static void saveToFile(Image image) {
+        File outputFile = new File("C:/WordCloudApp/");
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+        try {
+            ImageIO.write(bImage, "png", outputFile);
+            System.out.println("success");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
