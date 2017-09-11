@@ -1,14 +1,12 @@
 package address.model;
 
-import address.view.PostSubmitScene;
-import javafx.geometry.Pos;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.*;
-import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -44,6 +42,7 @@ public class SortWords {
         //giving the filled map to a new class
         LoopTheList loopTheList = new LoopTheList();
         loopTheList.loopingList(wordToCountMap);
+        //System.out.println(wordToCountMap);
 
 
 

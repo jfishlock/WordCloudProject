@@ -5,11 +5,14 @@ import com.iveloper.utils.packer.Packer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -20,9 +23,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +40,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ListToFont {
     int placedLine, newLine;
+    private static String fileName = "c:/Image.jpg";
     private ArrayList<Text> textnodes;
     Random rand = new Random(System.currentTimeMillis());
     Double randomdegree = ThreadLocalRandom.current().nextDouble(0, 360);
@@ -51,7 +57,7 @@ public class ListToFont {
         HBox hBox = new HBox();
         textnodes = new ArrayList<>();
 
-
+        ImageView imageView = new ImageView();
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
         menuBar.useSystemMenuBarProperty().set(true);
@@ -64,9 +70,23 @@ public class ListToFont {
         Pane root = new Pane(menuVBox);
         Scene scene = new Scene(root, 800, 800);
 
-//        itmsave.setOnAction(event -> {
-//            saveToFile(Snapshot);
-//        });
+        itmsave.setOnAction(event -> {
+            WritableImage image = root.snapshot(new SnapshotParameters(), null);
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("png files", "*png"));
+            File file = new File("cloud.png");
+
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                if (file.exists()) {
+                    file.renameTo(new File("cloud" + rand.nextInt(100) + ".png"));
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+
+        });
 
 
         Integer size = 150;
@@ -235,31 +255,73 @@ public class ListToFont {
                 }
             }
         }
-
-
+        int x1 = 0;
+        int y1 = 0;
         if (collisionDetected) {
             while (collisionDetected = true) {
+                for (int i = 0; i > textnodes.size(); i++) {
+                    if (text.intersects(text.localToScene(text.getBoundsInLocal()))) ;
+                    {
+
+                        x1 = 5 + x1;
+                        y1 = 5 + y1;
+
+
+                    }
+                    break;
+                }
+
+
                 Path path = new Path();
                 MoveTo moveTo = new MoveTo();
+                System.out.println("Collision");
+                //need to generate a path in straight line to a random degree between 0,360 and increment 5px until collision=false
 
-                text.setX(randomdegree);
-                text.setY(randomdegree);
+
                 path.getElements().add(moveTo);
                 break;
+
             }
+
         }
+    }
+
+
+    public static Image createImage(Pane pane) {
+        WritableImage writableImage;
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setFill(Color.WHITE);
+
+        int imageWidth = (int) pane.getBoundsInLocal().getWidth();
+        int imageHeight = (int) pane.getBoundsInLocal().getHeight();
+        writableImage = new WritableImage(imageWidth, imageHeight);
+        pane.snapshot(parameters, writableImage);
+
+        return writableImage;
 
     }
 
-    public static void saveToFile(Image image) {
-        File outputFile = new File("C:/WordCloudApp/");
-        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+    public void saveSnapToFile(Pane pane) {
+
+        Image image = createImage(pane);
+
+        BufferedImage buffImgARGB = SwingFXUtils.fromFXImage(image, null);
+        BufferedImage bufferedImage = new BufferedImage(buffImgARGB.getWidth(), buffImgARGB.getHeight(), buffImgARGB.OPAQUE);
+
+        Graphics2D graphics = bufferedImage.createGraphics();
+
         try {
-            ImageIO.write(bImage, "png", outputFile);
-            System.out.println("success");
+            ImageIO.write(bufferedImage, "png", new File(fileName));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        graphics.dispose();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(" your word cloud has been saved at : " + fileName);
+
+
     }
 }
 
