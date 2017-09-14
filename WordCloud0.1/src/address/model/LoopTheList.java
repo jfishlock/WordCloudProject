@@ -28,11 +28,12 @@ public class LoopTheList {
         //System.out.println(countToWordsMap);
         //putting the values into their own list as they are now sorted in the correct order
         List<List> list2 = new ArrayList<>();
+
+
         list2.addAll(countToWordsMap.values());
 
 
-
-        ListToFont listToFont = new ListToFont();
+        DisplayWords listToFont = new DisplayWords();
         listToFont.LoopingToScene(list2);
 
 

@@ -38,7 +38,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class ListToFont {
+public class DisplayWords {
     int placedLine, newLine;
     private static String fileName = "c:/Image.jpg";
     private ArrayList<Text> textnodes;
@@ -51,7 +51,7 @@ public class ListToFont {
 
     private ImageView pic;
 
-    void LoopingToScene(List<List> list2) {
+    public void LoopingToScene(List<List> list2) {
 
 
         HBox hBox = new HBox();
@@ -68,7 +68,8 @@ public class ListToFont {
         VBox menuVBox = new VBox(menuBar);
         menuVBox.setAlignment(Pos.TOP_RIGHT);
         Pane root = new Pane(menuVBox);
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 800, 600);
+        stage.getIcons().add(new Image("resources/cloud.png"));
 
         itmsave.setOnAction(event -> {
             WritableImage image = root.snapshot(new SnapshotParameters(), null);
@@ -81,6 +82,13 @@ public class ListToFont {
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
                 if (file.exists()) {
                     file.renameTo(new File("cloud" + rand.nextInt(100) + ".png"));
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Cloud saved in the Directory");
+                    alert.setHeaderText("Saved");
+                    alert.setContentText("cloud has been saved at:" + file.getAbsolutePath());
+
+                    alert.showAndWait();
                 }
             } catch (IOException exception) {
                 exception.printStackTrace();
@@ -240,50 +248,59 @@ public class ListToFont {
 
         stage.setScene(scene);
         stage.show();
+
     }
 
     //this part does the collision detection
 
+
     private void checkShapeIntersection(Text text) {
+//        double left = -text.getBoundsInParent().getWidth();
+//        double right = text.getBoundsInParent().getWidth();
+//        double up = -text.getBoundsInParent().getHeight();
+//        double down = text.getBoundsInParent().getHeight();
+        double left = -text.getBoundsInLocal().getWidth()- text.getLayoutY();
+        double right = text.getBoundsInLocal().getWidth();
+        double up = -text.getBoundsInLocal().getHeight() -  text.getLayoutX();
+        double down = text.getBoundsInLocal().getHeight();
+        List actionX = new ArrayList();
+        actionX.add(up);
+        actionX.add(down);
+        List actionY = new ArrayList();
+        actionY.add(left);
+        actionY.add(right);
+
+        double actionYIndex = rand.nextInt(actionY.size());
+        double actionXIndex = rand.nextInt(actionX.size());
+
+
         boolean collisionDetected = false;
         for (Shape static_bloc : textnodes) {
             if (static_bloc != text) {
 
-                Shape intersect = Text.intersect(text, static_bloc);
-                if (intersect.getBoundsInLocal().getWidth() != -1) {
-                    collisionDetected = true;
+
+                    Shape intersect = Text.intersect(text, static_bloc);
+                    if (intersect != null && intersect.getBoundsInLocal().intersects(text.getBoundsInLocal())) {
+                        collisionDetected = true;
+
                 }
             }
         }
-        int x1 = 0;
-        int y1 = 0;
+
+
         if (collisionDetected) {
-            while (collisionDetected = true) {
-                for (int i = 0; i > textnodes.size(); i++) {
-                    if (text.intersects(text.localToScene(text.getBoundsInLocal()))) ;
-                    {
 
-                        x1 = 5 + x1;
-                        y1 = 5 + y1;
-
-
-                    }
-                    break;
-                }
-
-
-                Path path = new Path();
-                MoveTo moveTo = new MoveTo();
-                System.out.println("Collision");
-                //need to generate a path in straight line to a random degree between 0,360 and increment 5px until collision=false
-
-
-                path.getElements().add(moveTo);
-                break;
-
-            }
+            Path path = new Path();
+            MoveTo moveTo = new MoveTo();
+            System.out.println("Collision");
+            if(textnodes.iterator().hasNext()){
+                text.setTranslateX(text.getLayoutX() + up);
+                text.setTranslateY(text.getLayoutY() + left);
+            };
 
         }
+
+
     }
 
 

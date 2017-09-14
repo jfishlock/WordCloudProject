@@ -1,5 +1,7 @@
 package address.model;
 
+import javafx.scene.control.Alert;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +26,10 @@ public class SortWords {
             stopWordList = br.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error with the stop words file");
+            alert.setContentText("If error re-occurs please reinstall program");
         }
 
 

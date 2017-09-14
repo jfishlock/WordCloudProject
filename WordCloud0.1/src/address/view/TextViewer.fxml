@@ -25,9 +25,9 @@
             <Label text="Enter your text to generate a wordcloud" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
-            <HBox prefHeight="66.66" prefWidth="200.0" alignment="CENTER" spacing="8">
+            <HBox alignment="CENTER" prefHeight="66.66" prefWidth="200.0" spacing="8">
                <children>
-                  <Button fx:id="submitButton" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#initalize" text="Generate" />
+                  <Button fx:id="submitButton" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#handleSubmit" text="Generate" />
                   <Button fx:id="clearButton" mnemonicParsing="false" onAction="#initalize" text="Clear" />
                </children>
             </HBox>

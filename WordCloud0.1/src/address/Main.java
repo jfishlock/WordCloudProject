@@ -18,11 +18,12 @@ public class Main extends Application {
     private AnchorPane TextViewer;
 
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Jake Fishlock JavaFX");
-        //this.primaryStage.getIcons().add(new Image("C:\\Users\\Jake Fishlock\\Desktop\\wordcloud0.2\\WordCloud0.1\\src\\resources\\cloud.png"));
+        this.primaryStage.getIcons().add(new Image("resources/cloud.png"));
 
 
 
@@ -79,6 +80,9 @@ public class Main extends Application {
     public Stage getPrimaryStage(){
         return primaryStage;
     }
+    long stopTime = System.nanoTime();
+
+
 
     public static void main(String[] args) {
         launch(args);

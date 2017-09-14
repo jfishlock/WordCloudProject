@@ -47,8 +47,20 @@ public class TextViewerController {
     private void initalize() throws IOException {
 
 
+
+        clearButton.setOnAction(event -> {
+            textArea.clear();
+        });
+
+
+
+    }
+
+    public void handleSubmit(){
         //to send text to be sorted against stop word list
         submitButton.setOnAction(event -> {
+            long startTime = System.nanoTime();
+
             String uText = textArea.getText();
             List<String> arList = new ArrayList<>(Arrays.asList(uText.replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ")));
 
@@ -66,14 +78,11 @@ public class TextViewerController {
 //            } catch(Exception e){
 //                e.printStackTrace();
 //            }
+            long stopTime  = System.nanoTime();
+            System.out.println((stopTime - startTime) / 1000000);
 
 
         });
-        clearButton.setOnAction(event -> {
-            textArea.clear();
-        });
-
-
     }
 
 
